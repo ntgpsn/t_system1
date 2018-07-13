@@ -1,11 +1,14 @@
 package test.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import test.model.Menu;
+import test.service.MenuService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,27 +22,18 @@ import java.util.List;
 @RequestMapping(value = "/v1/tcl")
 public class MenuController {
 
-    @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    public ResponseEntity<Object> findAllMenu() {
-        Menu parentMenu = new Menu();
-        parentMenu.setName("parent1");
-        parentMenu.setOpen("true");
-        parentMenu.setId("100002a");
-        parentMenu.setpId("100002");
+    @Autowired private MenuService menuService;
 
-        Menu subMenu1 = new Menu();
-        Menu subMenu11 = new Menu();
+    @RequestMapping(value = "/projectmanageMenu", method = RequestMethod.GET)
+    public ResponseEntity<Object> findAllMenu(@RequestParam(value = "userId") String userId,
+                                              @RequestParam(value = "accountType") String accountType) {
 
-        subMenu1.setId("100002a1");
-        subMenu1.setpId("100002a");
-        subMenu1.setName("sub1");
-
-        subMenu11.setId("100002a11");
-        subMenu11.setpId("100002a1");
-        subMenu11.setName("sub1");
-        parentMenu.addMenu(subMenu1);
-        List<Menu> menus = new ArrayList<>();
-        menus.add(parentMenu);
-        return new ResponseEntity<>(parentMenu, HttpStatus.OK);
+        try {
+            System.out.println("111111111");
+            List<Menu> menus = menuService.generateProjectManageMenu(userId, accountType);
+            return new ResponseEntity<>(menus, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("操作失败", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

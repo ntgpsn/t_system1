@@ -4,7 +4,7 @@ function dataUri(data){
     for (var i in data) { //用javascript的for/in循环遍历对象的属性
         uri += "&"+i+"="+data[i];
     }
-    return uri;
+    return uri.substring(0, uri.length -1);
 }
 
 function ajaxJsonCallGet(url, data, callback) {
@@ -12,7 +12,7 @@ function ajaxJsonCallGet(url, data, callback) {
     url = url + "?" + urlVal;
 
     $.ajax({
-        url: baseUrl + '/' + url,
+        url: '/t_system/' + url,
         contentType:"application/json;charset=UTF-8",
 
         type: "GET",

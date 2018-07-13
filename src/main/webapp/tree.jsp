@@ -49,20 +49,36 @@
         ];
 
         $(document).ready(function(){
-            ajaxJsonCallGet("/v1/tcl/findAll",null, function (data) {
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-            });
+            initProjectManage();
         });
+
+
+        function initProjectManage() {
+            var param = {
+              "userId":"5b4831c9997c3412f0de8521",
+               "accountType":"1"
+            };
+            ajaxJsonCallGet("/v1/tcl/projectmanageMenu",param, function (data) {
+                $.fn.zTree.init($("#treeDemo"), setting, data);
+            });
+        }
+
 
         var newCount = 1;
         //鼠标事件
         function addHoverDom(treeId, treeNode) {
             var sObj = $("#" + treeNode.tId + "_span");
-            if (treeNode.editNameFlag && $("#addBtn_"+treeNode.tId).length>0) return;
+            if (!treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
             // 显示修改删除增加图标
             var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
                 + "' title='add node' onfocus='this.blur();'></span>";
-            sObj.after(addStr);
+
+            var editStr = "<span class='button edit' id='editBtn_" + treeNode.tId
+                + "' title='edit node' onfocus='this.blur();'></span>";
+            var removeStr = "<span class='button remove' id='removeBtn_" + treeNode.tId
+                + "' title='remove node' onfocus='this.blur();'></span>";
+
+            sObj.after(addStr+editStr+removeStr);
             var btn = $("#addBtn_"+treeNode.tId);
             //click事件
             if (btn) btn.bind("click", function(){
@@ -77,6 +93,8 @@
     </SCRIPT>
 </head>
 <body>
-<ul id="treeDemo" class="ztree"></ul>
+    <div class="" id="projectManage">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
 </body>
 </html>

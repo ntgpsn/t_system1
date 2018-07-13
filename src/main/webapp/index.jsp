@@ -7,10 +7,21 @@
     <title>jquery实现多级树形分类可折叠菜单特效代码</title>
     <script type="text/javascript">
         $(function(){
-
+            
             extracted();
         });
 
+        
+        
+        function initProduct() {
+            ajaxJsonCallGet("/v1/tcl/findAllProduct",null, productCallback);
+        }
+
+        function productCallback(data) {
+
+        }
+        
+        
         function extracted() {
             $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
             $('.tree li.parent_li > span').on('click', function (e) {
@@ -33,7 +44,7 @@
 <div class="tree well">
     <ul>
         <li>
-            <span><i class="icon-folder-open"></i> Parent</span> <a href="">Goes somewhere</a>
+            <span id="projectManage"><i class="icon-folder-open"></i> 项目管理</span>
             <ul>
                 <li>
                     <span><i class="icon-minus-sign"></i> Child</span> <a href="">Goes somewhere</a>

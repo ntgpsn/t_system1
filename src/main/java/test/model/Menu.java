@@ -18,7 +18,7 @@ public class Menu {
     private List<Menu> children;
     private String checked;
     private String click;
-    private String editNameFlag;
+    private boolean editNameFlag;
 
     public String getId() {
         return id;
@@ -76,11 +76,11 @@ public class Menu {
         this.click = click;
     }
 
-    public String getEditNameFlag() {
+    public boolean isEditNameFlag() {
         return editNameFlag;
     }
 
-    public void setEditNameFlag(String editNameFlag) {
+    public void setEditNameFlag(boolean editNameFlag) {
         this.editNameFlag = editNameFlag;
     }
 
